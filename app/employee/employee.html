@@ -1,0 +1,97 @@
+﻿<div data-ng-controller="employeeController as vm">
+    <section class="matter">
+        <div class="col-md-10">
+            <div class="widget wviolet">
+                <div data-cc-widget-header title="{{vm.title}}"
+                     allow-collapse="false"></div>
+                <div class="widget-content text-center text-info">
+                    <table class="table table-condensed table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Account</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="employee in vm.employees">
+                                <td>{{employee.name}}</td>
+                                <td>
+                                    <div data-ng-repeat="phone in employee.phoneNumbers">
+                                        <div class="text-center">{{phone.value}}</div>
+                                    </div>
+                                </td>
+                                <td>{{employee.email}}</td>
+                                <td>
+                                    <div data-ng-repeat="account in employee.accountNumbers">
+                                        <div class="text-center">
+                                            <b>{{account.bank}}</b>: {{account.number}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" data-ng-click="vm.editEmployee(employee)">Edit</a>
+                                </td>
+                            </tr>
+                            <tr data-ng-if="vm.employeeEdit">
+                                <td>
+                                    <input data-ng-model="vm.employeeEdit.name" placeholder="Name"/>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="form-inline" data-ng-repeat="phone in vm.employeeEdit.phoneNumbers track by $index">
+                                            <div class="input-group pull-left">
+                                                <input class="form-control" data-ng-model="phone.value" placeholder="Phone Number" />
+                                                <span class="input-group-addon" data-ng-if="vm.employeeEdit.phoneNumbers.length > 1">
+                                                    <a data-ng-click="vm.removeItem(vm.employeeEdit.phoneNumbers, $index)"><i class="fa fa-times"></i></a>
+                                                </span>
+                                                <span class="input-group-addon" data-ng-if="$last">
+                                                    <a data-ng-click="vm.addItem(vm.employeeEdit.phoneNumbers)"><i class="fa fa-plus"></i></a>
+                                                </span>
+                                            </div>                                            
+                                        </div>
+                                    </div>                                    
+                                </td>
+                                <td>
+                                    <input data-ng-model="vm.employeeEdit.email" placeholder="Email" />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="form-inline" data-ng-repeat="account in vm.employeeEdit.accountNumbers track by $index">
+                                            <div class="input-group pull-left">
+                                                <input class="form-control input-sm" placeholder="Bank" data-ng-model="account.bank" />
+                                                <span class="input-group-btn" style="width:0px;"></span>
+                                                <input class="form-control input-sm" placeholder="Number" data-ng-model="account.number" />
+                                                <span class="input-group-addon">
+                                                    <a data-ng-click="vm.removeItem(vm.employeeEdit.accountNumbers, $index)"><i class="fa fa-times"></i></a>
+                                                </span>
+                                                <span class="input-group-addon" data-ng-if="$last">
+                                                    <a data-ng-click="vm.addItem(vm.employeeEdit.accountNumbers)"><i class="fa fa-plus"></i></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" data-ng-click="vm.save()">Save</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                    <div class="pull-left" data-ng-if="!vm.employeeEdit">
+                        <a class="btn btn-lg btn-primary" data-ng-click="vm.editEmployee()">Add New Employee</a>
+                    </div>
+                    <div class="pull-left" data-ng-if="vm.employeeEdit">
+                        <a class="btn btn-lg btn-danger" data-ng-click="vm.cancelEditEmployee()">Cancel Edit Employee</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

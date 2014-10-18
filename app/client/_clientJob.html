@@ -1,0 +1,369 @@
+﻿<div class="widget wlightblue" data-ng-controller="jobEditController as vmJob">
+    <div data-cc-widget-header title="Jobs" data-allow-collapse="false"></div>
+    <div class="widget-content">
+
+        <div class="clientJobs text-info">
+            <table class="table table-condensed table-hover">
+                <tbody>
+                    <tr data-ng-repeat="job in vm.client.jobs">
+                        <td class="col-md-3">
+                            <div class="panel panel-green" style="margin:15px;">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <i class="fa fa-calendar fa-5x"></i>
+                                        </div>
+                                        <div class="col-md-9 text-right">
+                                            <div class="huge">{{job.eventStartDate | date: 'EEEE, dd'}}</div>
+                                            <div class="">{{job.eventStartDate | date: 'MMMM yyyy'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a>
+                                    <div class="panel-footer">
+                                        <span class="pull-left">{{job.name}}</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="col-md-9">
+                            <div class="jobInfo" style="margin: 15px">
+                                <table class="table table-striped">
+                                    <tr data-ng-if="job.name || job.isEdit">
+                                        <th class="col-md-2">Job Name</th>
+                                        <td>
+                                            <span data-ng-if="!job.isEdit">
+                                                {{job.name}}
+                                            </span>
+                                            <span data-ng-if="job.isEdit">
+                                                <input class="form-control" data-ng-model="job.name" placeholder="Name" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr data-ng-if="job.location || job.isEdit">
+                                        <th class="col-md-2">Location</th>
+                                        <td>
+                                            <span data-ng-if="!job.isEdit">
+                                                {{job.location}}
+                                            </span>
+                                            <span data-ng-if="job.isEdit">
+                                                <input class="form-control" data-ng-model="job.location" placeholder="Location" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-2">Date/Time</th>
+                                        <td>
+                                            <div data-ng-if="!job.isEdit">
+                                                <div>
+                                                    {{job.eventStartDate | date: 'EEEE, dd-MMMM-yyyy'}}
+                                                </div>
+                                                <div>
+                                                    <span style="font-weight: 700">
+                                                        Event Start:
+                                                    </span>
+                                                    <span>
+                                                        {{job.eventStartDate | date: 'HH:mm'}}
+                                                    </span>
+                                                    &nbsp;&nbsp;
+                                                    <span style="font-weight: 700">
+                                                        Job Start:
+                                                    </span>
+                                                    <span>
+                                                        {{job.jobStartDate | date: 'HH:mm'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div data-ng-if="job.isEdit">
+                                                <div>
+                                                    <span class="input-group col-md-6">
+                                                        <input type="text" class="form-control" datepicker-popup="dd MMMM yyyy" ng-model="job.eventStartDate"
+                                                               close-text="Close" is-open="vmJob.isDpOpened" show-weeks="false" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="vmJob.openDp($event)"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div style="display: table">
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <span style="font-weight: 700">
+                                                            Event Start:&nbsp;&nbsp;
+                                                        </span>
+                                                    </div>
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <timepicker ng-model="job.eventStartDate" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+                                                    </div>
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <span style="font-weight: 700">
+                                                            &nbsp;&nbsp;Job Start:&nbsp;&nbsp;
+                                                        </span>
+                                                    </div>
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <timepicker ng-model="job.jobStartDate" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-ng-if="job.weddingDress || job.isEdit">
+                                        <th class="col-md-2">Wedding Dress</th>
+                                        <td>
+                                            <span data-ng-if="!job.isEdit">
+                                                {{job.weddingDress}}
+                                            </span>
+                                            <span data-ng-if="job.isEdit">
+                                                <input class="form-control" data-ng-model="job.weddingDress" placeholder="Wedding Dress" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr data-ng-if="job.note || job.isEdit">
+                                        <th class="col-md-2">Note</th>
+                                        <td>
+                                            <span data-ng-if="!job.isEdit" style="white-space: pre-wrap" data-ng-bind="job.note">
+                                            </span>
+                                            <span data-ng-if="job.isEdit">
+                                                <textarea class="form-control" data-ng-model="job.note" placeholder="Note" rows="3"></textarea>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="text-left" data-ng-if="vm.isEditMode">
+                                        <td colspan="2">
+                                            <a class="btn btn-warning" data-ng-click="vmJob.edit(job)" data-ng-if="!job.isEdit">Edit</a>
+                                            <a class="btn btn-success" data-ng-click="vmJob.save(vm.client.jobs, job)" data-ng-if="job.isEdit">Save</a>
+                                            <a class="btn btn-danger" data-ng-click="vmJob.remove(vm.client.jobs, job)" data-ng-if="job.isEdit">Delete</a>
+                                            <a class="btn btn-warning" data-ng-click="vmJob.cancel(job)" data-ng-if="job.isEdit">Cancel</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br /><br />
+                                <div data-ng-controller="assignedEmployeeEditController as vmAssignedEmployee">
+                                    <table class="table" data-ng-if="(job.assignedEmployees && job.assignedEmployees.length > 0) || vmAssignedEmployee.newAssignedEmployee">
+                                        <tr>
+                                            <th class="col-md-2" style="border-top: 0">Employees</th>
+                                            <td style="border-top: 0">
+                                                <div class="text-center text-info">
+                                                    <table class="table table-condensed table-striped table-hover">
+                                                        <thead>
+                                                            <tr style="font-weight: bold">
+                                                                <td class="col-md-3">Name</td>
+                                                                <td class="col-md-3">Tasks</td>
+                                                                <td class="col-md-2">Fee</td>
+                                                                <td class="col-md-1">Is Paid</td>
+                                                                <td class="col-md-3"></td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr data-ng-repeat="assignedEmployee in job.assignedEmployees">
+                                                                <td>
+                                                                    <span data-ng-if="!assignedEmployee.isEdit">
+                                                                        {{assignedEmployee.employee.name}}
+                                                                    </span>
+                                                                    <span data-ng-if="assignedEmployee.isEdit">
+                                                                        <select class="form-control" ng-model="assignedEmployee.employee" ng-options="employee as employee.name for employee in vm.employees"></select>
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <span data-ng-if="!assignedEmployee.isEdit">
+                                                                        <div data-ng-repeat="task in assignedEmployee.tasks">
+                                                                            <div class="text-center">{{task.value}}</div>
+                                                                        </div>
+                                                                    </span>
+                                                                    <span data-ng-if="assignedEmployee.isEdit">
+                                                                        <div class="form-inline" data-ng-repeat="task in assignedEmployee.tasks track by $index">
+                                                                            <div class="input-group pull-left">
+                                                                                <input class="form-control" data-ng-model="task.value" placeholder="Task" />
+                                                                                <span class="input-group-addon" data-ng-if="assignedEmployee.tasks.length > 1">
+                                                                                    <a data-ng-click="vmAssignedEmployee.removeItem(assignedEmployee.tasks, $index)"><i class="fa fa-times"></i></a>
+                                                                                </span>
+                                                                                <span class="input-group-addon" data-ng-if="$last">
+                                                                                    <a data-ng-click="vmAssignedEmployee.addItem(assignedEmployee.tasks)"><i class="fa fa-plus"></i></a>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <span data-ng-if="!assignedEmployee.isEdit">
+                                                                        {{assignedEmployee.fee | nfcurrency}}
+                                                                    </span>
+                                                                    <span data-ng-if="assignedEmployee.isEdit">
+                                                                        <input type="number" class="form-control" data-ng-model="assignedEmployee.fee" placeholder="Fee" />
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <span data-ng-if="!assignedEmployee.isEdit">
+                                                                        {{assignedEmployee.isPaid ? "Yes" : "No"}}
+                                                                    </span>
+                                                                    <span data-ng-if="assignedEmployee.isEdit">
+                                                                        <input type="checkbox" class="form-control" data-ng-model="assignedEmployee.isPaid" />
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <span data-ng-if="vm.isEditMode">
+                                                                        <a class="btn btn-sm btn-warning" data-ng-click="vmAssignedEmployee.edit(assignedEmployee)" data-ng-if="!assignedEmployee.isEdit">Edit</a>
+                                                                        <a class="btn btn-sm btn-success" data-ng-click="vmAssignedEmployee.save(job.assignedEmployees, assignedEmployee)" data-ng-if="assignedEmployee.isEdit">Save</a>
+                                                                        <a class="btn btn-sm btn-danger" data-ng-click="vmAssignedEmployee.remove(job.assignedEmployees, assignedEmployee)" data-ng-if="assignedEmployee.isEdit">Delete</a>
+                                                                        <a class="btn btn-sm btn-warning" data-ng-click="vmAssignedEmployee.cancel(assignedEmployee)" data-ng-if="assignedEmployee.isEdit">Cancel</a>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- New Assigned Employee -->
+                                                            <tr data-ng-if="vmAssignedEmployee.newAssignedEmployee">
+                                                                <td>
+                                                                    <select class="form-control" ng-model="vmAssignedEmployee.newAssignedEmployee.employee" ng-options="employee as employee.name for employee in vm.employees"></select>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-inline" data-ng-repeat="task in vmAssignedEmployee.newAssignedEmployee.tasks track by $index">
+                                                                        <div class="input-group pull-left">
+                                                                            <input class="form-control" data-ng-model="task.value" placeholder="Task" />
+                                                                            <span class="input-group-addon" data-ng-if="vmAssignedEmployee.newAssignedEmployee.tasks.length > 1">
+                                                                                <a data-ng-click="vmAssignedEmployee.removeItem(vmAssignedEmployee.newAssignedEmployee.tasks, $index)"><i class="fa fa-times"></i></a>
+                                                                            </span>
+                                                                            <span class="input-group-addon" data-ng-if="$last">
+                                                                                <a data-ng-click="vmAssignedEmployee.addItem(vmAssignedEmployee.newAssignedEmployee.tasks)"><i class="fa fa-plus"></i></a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" class="form-control" data-ng-model="vmAssignedEmployee.newAssignedEmployee.fee" placeholder="Fee" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" class="form-control" data-ng-model="vmAssignedEmployee.newAssignedEmployee.isPaid" />
+                                                                </td>
+                                                                <td>                                                                    
+                                                                    <a class="btn btn-sm btn-success" data-ng-click="vmAssignedEmployee.save(job.assignedEmployees, vmAssignedEmployee.newAssignedEmployee)">Save</a>
+                                                                    <a class="btn btn-sm btn-warning" data-ng-click="vmAssignedEmployee.cancel(vmAssignedEmployee.newAssignedEmployee)">Cancel</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <a class="btn btn-primary" data-ng-click="vmAssignedEmployee.add(job.id)" data-ng-if="vm.isEditMode">Assign Employee</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr data-ng-if="vmJob.newJob">
+                        <td class="col-md-3">
+                            <div class="panel panel-green" style="margin:15px;">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <i class="fa fa-calendar fa-5x"></i>
+                                        </div>
+                                        <div class="col-md-9 text-right">
+                                            <div class="huge">{{vmJob.newJob.eventStartDate | date: 'EEEE, dd'}}</div>
+                                            <div class="">{{vmJob.newJob.eventStartDate | date: 'MMMM yyyy'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a>
+                                    <div class="panel-footer">
+                                        <span class="pull-left">{{vmJob.newJob.name}}</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="col-md-9">
+                            <div class="jobInfo" style="margin: 15px">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th class="col-md-2">Job Name</th>
+                                        <td>
+                                            <span>
+                                                <input class="form-control" data-ng-model="vmJob.newJob.name" placeholder="Name" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-2">Location</th>
+                                        <td>
+                                            <span>
+                                                <input class="form-control" data-ng-model="vmJob.newJob.location" placeholder="Location" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-2">Date/Time</th>
+                                        <td>
+                                            <div>
+                                                <div>
+                                                    <span class="input-group col-md-6">
+                                                        <input type="text" class="form-control" datepicker-popup="dd MMMM yyyy" ng-model="vmJob.newJob.eventStartDate"
+                                                               close-text="Close" is-open="vmJob.isDpOpened" show-weeks="false" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="vmJob.openDp($event)"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div style="display: table">
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <span style="font-weight: 700">
+                                                            Event Start:&nbsp;&nbsp;
+                                                        </span>
+                                                    </div>
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <timepicker ng-model="vmJob.newJob.eventStartDate" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+                                                    </div>
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <span style="font-weight: 700">
+                                                            &nbsp;&nbsp;Job Start:&nbsp;&nbsp;
+                                                        </span>
+                                                    </div>
+                                                    <div style="display: table-cell; vertical-align: middle">
+                                                        <timepicker ng-model="vmJob.newJob.jobStartDate" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-2">Wedding Dress</th>
+                                        <td>
+                                            <span>
+                                                <input class="form-control" data-ng-model="vmJob.newJob.weddingDress" placeholder="Wedding Dress" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-2">Note</th>
+                                        <td>
+                                            <span>
+                                                <textarea class="form-control" data-ng-model="vmJob.newJob.note" placeholder="Note" rows="3"></textarea>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="text-left">
+                                        <td colspan="2">
+                                            <a class="btn btn-success" data-ng-click="vmJob.save(vm.client.jobs, vmJob.newJob)">Save</a>
+                                            <a class="btn btn-warning" data-ng-click="vmJob.cancel(vmJob.newJob)">Cancel</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="widget-foot" data-ng-if="vm.isEditMode">
+        <div class="clearfix"></div>
+        <div class="pull-left" data-ng-if="!vmJob.incomeEdit">
+            <a class="btn btn-primary" data-ng-click="vmJob.add(vm.client.id)">Add New Jobs</a>
+        </div>
+        <div class="pull-left" data-ng-if="vmJob.incomeEdit">
+            <a class="btn btn-danger" data-ng-click="vmJob.cancel()">Cancel</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

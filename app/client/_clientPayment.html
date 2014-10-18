@@ -1,0 +1,69 @@
+﻿<div class="widget wred" data-ng-controller="incomeEditController as vmIncome">
+    <div data-cc-widget-header title="Client Payments"
+         data-allow-collapse="false"></div>
+    <div class="widget-content">
+        <div class="text-center text-info">
+            <table class="table table-condensed table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Payment Type</th>
+                        <th>Note</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="income in vm.client.incomes">
+                        <td>{{income.dateTime | date:'shortDate'}}</td>
+                        <td>{{income.amount | nfcurrency}}</td>
+                        <td>{{income.paymentType}}</td>
+                        <td>{{income.note}}</td>
+                        <td>
+                            <a class="btn btn-warning" data-ng-click="vmIncome.edit(vm.client.id, income)" data-ng-if="vm.isEditMode">Edit</a>
+                        </td>
+                    </tr>
+                    <tr data-ng-if="vmIncome.incomeEdit">
+                        <td colspan="6" class="text-left">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" datepicker-popup="dd MMMM yyyy" ng-model="vmIncome.incomeEdit.dateTime"
+                                               close-text="Close" is-open="vmIncome.isDpOpened" show-weeks="false" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vmIncome.openDp($event)"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="number" class="form-control" data-ng-model="vmIncome.incomeEdit.amount" placeholder="Amount" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Payment Type</label>
+                                    <select class="form-control" data-ng-model="vmIncome.incomeEdit.paymentType" data-ng-options="type for type in ['Cash', 'BCA', 'Mandiri']"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Note</label>
+                                    <input class="form-control" data-ng-model="vmIncome.incomeEdit.note" placeholder="Note" />
+                                </div>
+                                <a type="submit" class="btn btn-success" data-ng-click="vmIncome.save(vm.client.incomes)">Save</a>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="widget-foot" data-ng-if="vm.isEditMode">
+        <div class="clearfix"></div>
+        <div class="pull-left" data-ng-if="!vmIncome.incomeEdit">
+            <a class="btn btn-primary" data-ng-click="vmIncome.edit(vm.client.id)">Add New Income</a>
+        </div>
+        <div class="pull-left" data-ng-if="vmIncome.incomeEdit">
+            <a class="btn btn-danger" data-ng-click="vmIncome.cancel()">Cancel Edit Income</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

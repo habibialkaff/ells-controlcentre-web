@@ -1,0 +1,6 @@
+{
+    "name": "Ells Control Centre",
+    "dependencies": {
+        "bootstrap-toggle": "2.0.0"
+    }
+}

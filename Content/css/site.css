@@ -1,0 +1,15 @@
+﻿.clientInfo {
+    margin: 0 10px;
+}
+
+.jobInfo th,
+.clientInfo th
+{
+    text-align: right;
+    vertical-align: middle !important;
+}
+
+.panel-title a,
+.clientJobs a {
+    cursor: pointer;
+}

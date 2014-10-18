@@ -1,0 +1,56 @@
+﻿<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div data-ng-include="'/app/layout/topnav.html'"></div>
+    
+    <div data-ng-include="'/app/layout/sidebar.html'"></div>    
+    <!-- /.navbar-static-side -->
+</nav>
+<div id="page-wrapper">
+    <div data-ng-view class="shuffle-animation">
+    </div>
+</div>
+
+<!--<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-controller="shellController as vm">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
+            <ul class="nav navbar-nav navbar-right">
+                <li data-ng-hide="!vm.authentication.isAuth"><a href="/">Welcome {{vm.authentication.userName}}</a></li>
+                <li data-ng-hide="!vm.authentication.isAuth"><a href="/orders">My Orders</a></li>
+                <li data-ng-hide="!vm.authentication.isAuth"><a href="/refresh">Refresh Token</a></li>
+                <li data-ng-hide="!vm.authentication.isAuth"><a href="" data-ng-click="vm.logOut()">Logout</a></li>
+                <li data-ng-hide="vm.authentication.isAuth"> <a href="/login">Login</a></li>
+                <li data-ng-hide="vm.authentication.isAuth"> <a href="/signup">Sign Up</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <div class="page-header text-center">
+            <h1>AngularJS Authentication</h1>
+        </div>
+        <p>AngularJS Application which uses OAuth Bearer Token for authentication and implements Refresh Tokens. The backend API is built using ASP.NET Web API 2, OWIN middleware, and ASP.NET Identity.</p>
+    </div>
+</div>
+<div class="container">
+    <div data-ng-view="">
+    </div>
+</div>
+<hr />
+<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted">Created by Taiseer Joudeh. Twitter: <a target="_blank" href="http://twitter.com/tjoudeh">@tjoudeh</a></p>
+            </div>
+            <div class="col-md-6">
+                <p class="text-muted">Taiseer Joudeh Blog: <a target="_blank" href="http://bitoftech.net">bitoftech.net</a></p>
+            </div>
+        </div>
+    </div>
+</div>-->

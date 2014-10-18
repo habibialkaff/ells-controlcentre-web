@@ -1,0 +1,151 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <div class="widget wred">
+            <div data-cc-widget-header title="Client Information"
+                 data-allow-collapse="false"></div>
+            <div class="widget-content">
+                <div class="clientInfo">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <tr data-ng-if="vm.client.name || vm.client.isEdit">
+                                    <th class="col-md-3">Name</th>
+                                    <td>
+                                        <span data-ng-if="!vm.client.isEdit">
+                                            {{vm.client.name}}
+                                        </span>
+                                        <span data-ng-if="vm.client.isEdit">
+                                            <input class="form-control" data-ng-model="vm.client.name" placeholder="Name" />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr data-ng-if="vm.client.email || vm.client.isEdit">
+                                    <th class="col-md-3">Email</th>
+                                    <td>
+                                        <span data-ng-if="!vm.client.isEdit">
+                                            {{vm.client.email}}
+                                        </span>
+                                        <span data-ng-if="vm.client.isEdit">
+                                            <input class="form-control" data-ng-model="vm.client.email" placeholder="Email" type="email" />
+                                        </span>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <th class="col-md-3">Phone Numbers</th>
+                                    <td>
+                                        <span data-ng-if="!vm.client.isEdit">
+                                            <ul class="list-unstyled fa-ul">
+                                                <li data-ng-repeat="phone in vm.client.phoneNumbers">
+                                                    <i class="fa-li fa fa-phone-square"></i>{{phone.value}}
+                                                </li>
+                                            </ul>
+                                        </span>
+                                        <span data-ng-if="vm.client.isEdit">
+                                            <div class="form-inline" data-ng-repeat="phone in vm.client.phoneNumbers track by $index">
+                                                <div class="input-group">
+                                                    <input class="form-control" data-ng-model="phone.value" placeholder="Phone Number" />
+                                                    <span class="input-group-addon" data-ng-if="vm.client.phoneNumbers.length > 1">
+                                                        <a data-ng-click="vm.removeItem(vm.client.phoneNumbers, $index)"><i class="fa fa-times"></i></a>
+                                                    </span>
+                                                    <span class="input-group-addon" data-ng-if="$last">
+                                                        <a data-ng-click="vm.addItem(vm.client.phoneNumbers)"><i class="fa fa-plus"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="col-md-3">Total Fee</th>
+                                    <td>
+                                        <span data-ng-if="!vm.client.isEdit">
+                                            {{vm.client.totalFee | nfcurrency}}
+                                        </span>
+                                        <span data-ng-if="vm.client.isEdit">
+                                            <input type="number" class="form-control" data-ng-model="vm.client.totalFee" placeholder="Total Fee" />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr data-ng-if="vm.client.note || vm.client.isEdit">
+                                    <th class="col-md-3">Note</th>
+                                    <td>
+                                        <span data-ng-if="!vm.client.isEdit" style="white-space: pre-wrap" data-ng-bind="vm.client.note">
+                                        </span>
+                                        <span data-ng-if="vm.client.isEdit">
+                                            <textarea class="form-control" data-ng-model="vm.client.note" placeholder="Note" rows="3"></textarea>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-foot" data-ng-if="vm.isEditMode">
+                <div class="clearfix"></div>
+                <div class="pull-left" data-ng-if="!vm.client.isEdit">
+                    <a class="btn btn-warning action" data-ng-click="vm.edit()">Edit</a>
+                </div>
+                <div class="pull-left" data-ng-if="vm.client.isEdit">
+                    <a class="btn btn-success" data-ng-click="vm.update()">Save</a>
+                    <a class="btn btn-danger" data-ng-click="vm.remove()">Delete</a>
+                    <a class="btn btn-warning" data-ng-click="vm.cancel()">Cancel</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary" style="margin-top: 10px">
+            <div class="panel-heading">
+                <span class="pull-right" data-ng-if="vm.isEditMode">
+                    <a class="btn btn-warning" data-ng-if="!vm.packageEdit" data-ng-click="vm.editPackage()">Edit</a>
+                    <a class="btn btn-success" data-ng-if="vm.packageEdit" data-ng-click="vm.updatePackage()">Save</a>
+                    <a class="btn btn-warning" data-ng-if="vm.packageEdit" data-ng-click="vm.cancelPackageEdit()">Cancel</a>
+                </span>
+                <h4>
+                    Package:
+                    <span data-ng-if="!vm.packageEdit">
+                        {{vm.client.selectedPackage}}
+                    </span>
+                    <span data-ng-if="vm.packageEdit">
+                        <select ng-model="vm.packageEdit.selectedPackage" ng-options="pckg.name as pckg.name for pckg in vm.packages" data-ng-change="vm.changePackage()" style="background: green"></select>
+                    </span>
+                </h4>
+            </div>
+            <div class="list-group">                
+                <div data-ng-if="!vm.packageEdit">
+                    <a class="list-group-item" data-ng-repeat="item in vm.client.packageItems">
+                        {{item.value}}
+                    </a>
+                </div>
+                <div data-ng-if="vm.packageEdit">
+                    <div class="list-group-item" data-ng-repeat="item in vm.packageEdit.packageItems">
+                        <span class="input-group">
+                            <input class="form-control" data-ng-model="item.value" placeholder="Item" />
+                            <span class="input-group-addon">
+                                <a data-ng-click="vm.removeItem(vm.packageEdit.packageItems, $index)"><i class="fa fa-times"></i></a>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <a class="list-group-item list-group-item-info" data-ng-click="vm.addItem(vm.packageEdit.packageItems)" data-ng-if="vm.packageEdit"><h4>Add Item</h4></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="deleteClientModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        All data related to this client will be removed.
+        
+        Are you sure?
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

@@ -1,0 +1,29 @@
+﻿<div data-ng-controller="clientDetailController as vm">
+    <div class="row" style="padding: 10px;">
+        <div class="col-md-12">
+            <div class="pull-right">                
+                Click to switch to <span id="otherMode" style="font-weight: bold"></span> Mode
+                <input id="switchMode" type="checkbox" checked data-offstyle="warning">
+            </div>
+        </div>
+    </div>
+    <div id="clientDetail" class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div data-ng-include="'/app/client/_clientInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div data-ng-include="'/app/client/_clientJob.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div data-ng-include="'/app/client/_clientPayment.html'"></div>
+                </div>
+            </div>  
+        </div>
+    </div>    
+</div>

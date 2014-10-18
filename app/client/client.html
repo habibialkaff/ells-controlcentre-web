@@ -1,0 +1,111 @@
+﻿<div data-ng-controller="clientController as vm">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="widget wviolet">
+                <div data-cc-widget-header title="Client"
+                     allow-collapse="false"></div>
+                <div class="widget-content text-center text-info">
+                    <table class="table table-condensed table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Outstanding Fee</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="client in vm.clients">
+                                <td>{{client.name}}</td>
+                                <td>
+                                    <div data-ng-repeat="phone in client.phoneNumbers">
+                                        <div class="text-center">{{phone.value}}</div>
+                                    </div>
+                                </td>
+                                <td>{{client.email}}</td>
+                                <td>{{client.outstandingFee | nfcurrency}}</td>
+                                <td>
+                                    <a class="btn btn-warning" data-ng-href="/client/detail/{{client.id}}">Detail</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="widget-foot">
+                    <div>
+                        <a class="btn btn-lg btn-primary" data-ng-click="vm.add()">Add New Client</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/ng-template" id="addClientModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Add New Client</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <th class="col-md-3">Name</th>
+                            <td>
+                                <span>
+                                    <input class="form-control" data-ng-model="vm.client.name" placeholder="Name" />
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3">Email</th>
+                            <td>
+                                <span>
+                                    <input class="form-control" data-ng-model="vm.client.email" placeholder="Email" type="email" />
+                                </span>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <th class="col-md-3">Phone Numbers</th>
+                            <td>
+                                <span>
+                                    <div class="form-inline" data-ng-repeat="phone in vm.client.phoneNumbers track by $index">
+                                        <div class="input-group">
+                                            <input class="form-control" data-ng-model="phone.value" placeholder="Phone Number" />
+                                            <span class="input-group-addon" data-ng-if="vm.client.phoneNumbers.length > 1">
+                                                <a data-ng-click="vm.removeItem(vm.client.phoneNumbers, $index)"><i class="fa fa-times"></i></a>
+                                            </span>
+                                            <span class="input-group-addon" data-ng-if="$last">
+                                                <a data-ng-click="vm.addItem(vm.client.phoneNumbers)"><i class="fa fa-plus"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3">Total Fee</th>
+                            <td>
+                                <span>
+                                    <input type="number" class="form-control" data-ng-model="vm.client.totalFee" placeholder="Total Fee" />
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3">Note</th>
+                            <td>
+                                <span>
+                                    <textarea class="form-control" data-ng-model="vm.client.note" placeholder="Note" rows="3"></textarea>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="vm.save()">Save and Next</button>
+            <button class="btn btn-warning" ng-click="vm.cancel()">Cancel</button>
+        </div>
+    </script>
+</div>
